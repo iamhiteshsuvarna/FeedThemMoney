@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import AuthGuard from "./AuthGuard";
+import Link from "next/link";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,11 +23,11 @@ export const metadata = {
 function Navbar() {
   return (
     <nav className="bg-blue-950 text-white px-6 py-3 flex gap-6 items-center shadow">
-      <a href="/" className="font-bold text-lg ">Feed Them Money</a>
-      <a href="/app" className=" hover:underline">Home</a>
-      <a href="/app/transactions" className=" hover:underline">Transactions</a>
-      <a href="/app/settings" className=" hover:underline">Settings</a>
-      <a href="/app/logout" className="ml-auto hover:underline">Logout</a>
+      <Link href="#" className="font-bold text-lg ">Feed Them Money</Link>
+      <Link href="/app" className=" hover:underline">Home</Link>
+      <Link href="/app/transactions" className=" hover:underline">Transactions</Link>
+      <Link href="/app/settings" className=" hover:underline">Settings</Link>
+      <Link href="/app/logout" className="ml-auto hover:underline">Logout</Link>
     </nav>
   );
 }
