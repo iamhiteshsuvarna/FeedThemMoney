@@ -105,7 +105,7 @@ export default function TransactionsPage() {
       setIsSubmitting(false);
       setForm({
         txn_id: "",
-        txn_date: "",
+        // txn_date: "",
         category: "",
         particulars: "",
         amount: "",
