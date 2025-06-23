@@ -115,3 +115,9 @@ body {
   border: 1px dashed #000; /* Add a bottom border for separation */
   font-size: 1em;
 }
+
+.transactions-table tbody td.text-right {
+  text-align: right; /* Align text to the left */
+}
+
+
