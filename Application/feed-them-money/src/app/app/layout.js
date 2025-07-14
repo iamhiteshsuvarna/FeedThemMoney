@@ -22,8 +22,8 @@ export const metadata = {
 
 function Navbar() {
   return (
-    <nav className="bg-blue-950 text-white px-6 py-3 flex gap-6 items-center shadow">
-      <Link href="#" className="font-bold text-lg ">Feed Them Money</Link>
+    <nav className="bg-blue-950 h-18 text-white px-6 py-3 flex gap-6 items-center shadow">
+      <Link href="#" className="font-bold text-sm">Feed Them Money</Link>
       <Link href="/app" className=" hover:underline">Home</Link>
       <Link href="/app/transactions" className=" hover:underline">Transactions</Link>
       <Link href="/app/settings" className=" hover:underline">Settings</Link>

@@ -86,6 +86,7 @@ body {
 }
 .left-1 {
   left: 0em; /* Adjust this value to match the width of your first column */
+  z-index: 10;
 }
 .z-10 {
   z-index: 10;
@@ -109,9 +110,51 @@ body {
   border: 1px dashed #000; /* Add a bottom border for separation */
 }
 
+th.content.dashboard-header.spent {
+  background: #ff9c38;
+}
+
+th.content.dashboard-header.budget {
+  background: #f9c693;
+}
+
+th.content.dashboard-header.balance {
+  background: #f5e9dc;
+}
+
+td.dashboard-data.amount.spent {
+    background: #fff3e7;
+    color: #000;
+    cursor: pointer;
+}
+
+td.dashboard-data.amount.selected_for_sum {
+    background: #3d362f;
+    color: #fff;
+    cursor: pointer;
+}
+
+
+td.dashboard-data.amount.spent:hover {
+    background: #ffaa55;
+}
+
+
+
+td.dashboard-data.amount.budget {
+    background: #e8e8e8;
+}
+
+
 .transactions-table tbody td {
   padding: 0em 0.5rem; /* Equivalent to Tailwind's p-2 */
   text-align: left; /* Align text to the left */
   border: 1px dashed #000; /* Add a bottom border for separation */
   font-size: 1em;
 }
+
+.transactions-table tbody td.text-right {
+  text-align: right; /* Align text to the left */
+}
+
+

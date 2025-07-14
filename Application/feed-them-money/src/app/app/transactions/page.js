@@ -5,6 +5,7 @@ export default function TransactionsPage() {
   const [data, setData] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [formHidden, setFormHidden] = useState(true);
   const [form, setForm] = useState({
     txn_id: "",
     txn_date: "",
@@ -14,6 +15,7 @@ export default function TransactionsPage() {
     money_account: "",
     tags: [],
   });
+  const txnDateInputRef = useRef(null);
 
   const [categories, setCategories] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -37,6 +39,7 @@ export default function TransactionsPage() {
   const [filterStartDate, setFilterStartDate] = useState("");
   const [filterEndDate, setFilterEndDate] = useState("");
   const [filterCategory, setFilterCategory] = useState("");
+  const [filterAccount, setFilterAccount] = useState("");
   const [filterTag, setFilterTag] = useState("");
   const [sortAmount, setSortAmount] = useState(""); // "asc" or "desc"
 
@@ -103,16 +106,22 @@ export default function TransactionsPage() {
       loadTransactions();
       loadTags();
       setIsSubmitting(false);
-      setForm({
+      setForm((prevForm) => ({
         txn_id: "",
-        // txn_date: "",
+        txn_date: prevForm.txn_date, // Keep the selected date intact
         category: "",
         particulars: "",
         amount: "",
         money_account: "",
         tags: [],
-      });
+      }));
       setIsEditing(false);
+      // Focus the txn_date input after submit
+      setTimeout(() => {
+        if (txnDateInputRef.current) {
+          txnDateInputRef.current.focus();
+        }
+      }, 0);
     }
     // Optionally show a message
   };
@@ -249,6 +258,10 @@ export default function TransactionsPage() {
   if (filterCategory)
     filteredData = filteredData.filter(txn => txn.category === filterCategory);
 
+  // Filter by account
+  if (filterAccount)
+    filteredData = filteredData.filter(txn => txn.money_account === filterAccount);
+
   // Filter by tag
   if (filterTag)
     filteredData = filteredData.filter(txn =>
@@ -286,6 +299,7 @@ export default function TransactionsPage() {
       tags: Array.isArray(JSON.parse(txn.tags)) ? JSON.parse(txn.tags) : [],
     });
     setIsEditing(true);
+    setFormHidden(false);
     // Optionally scroll to form or focus
   };
 
@@ -304,8 +318,8 @@ export default function TransactionsPage() {
   };
 
   return (
-    <div className="dark:text-black grid grid-cols-1 md:grid-cols-3 grid-rows-3 md:grid-rows-1 gap-2 items-start h-[calc(100vh-4em)]">
-      <div className="col-span-2 row-span-2 flex items-start bg-white h-full p-2">
+    <div className="dark:text-black grid grid-cols-1 md:grid-cols-3 grid-rows-12 md:grid-rows-1 gap-2 items-start h-[calc(100vh-5em)]">
+      <div className={`col-span-2 row-span-10 flex items-start bg-white h-full p-2`}>
       {data.length === 0 ? (
           <div className="w-full h-full flex items-center justify-center">
             <p className="text-gray-500">Loading...</p>
@@ -355,6 +369,21 @@ export default function TransactionsPage() {
                 })}
               </select>
               <select
+                value={filterAccount}
+                onChange={e => setFilterAccount(e.target.value)}
+                className="border rounded px-2 py-1"
+              >
+                <option value="">All Accounts</option>
+                {moneyAccounts.map(acc => {
+                  const value = typeof acc === "string" ? acc : acc.account_name;
+                  return (
+                    <option key={value} value={value}>
+                      {value}
+                    </option>
+                  );
+                })}
+              </select>
+              <select
                 value={filterTag}
                 onChange={e => setFilterTag(e.target.value)}
                 className="border rounded px-2 py-1"
@@ -395,7 +424,7 @@ export default function TransactionsPage() {
                   <th>Date</th>
                   <th>Category</th>
                   <th>Particulars</th>
-                  <th className="text-right">Amount</th>
+                  <th>Amount</th>
                   <th>Account</th>
                   <th>Tags</th>
                   <th>Actions</th>
@@ -413,7 +442,7 @@ export default function TransactionsPage() {
                       <td>{formattedDate}</td>
                       <td>{txn.category}</td>
                       <td>{txn.particulars}</td>
-                      <td>{txn.amount.toFixed(2)}</td>
+                      <td className="text-right">{txn.amount.toFixed(2)}</td>
                       <td>{txn.money_account}</td>
                       <td>
                         {Array.isArray(JSON.parse(txn.tags))
@@ -451,9 +480,12 @@ export default function TransactionsPage() {
           
         </div>}
       </div>
-      <div className="flex flex-col bg-white h-full p-2 w-full">
-        <div className="flex flex-col p-4 border-collapse rounded-lg bg-amber-100 mb-4 border-4 border-blue-600">
-          <h2 className="text-lg font-semibold mb-4">Add Transaction</h2>
+      <div className={`${!formHidden ? `row-span-12`: `row-span-2`} flex flex-col bg-white h-full p-2 w-full`}>
+        <button className={`${!formHidden ? `hidden`: `flex`}  md:hidden py-2 px-4 bg-blue-600 text-white rounded-lg items-center justify-center`} onClick={() => setFormHidden(false)}>Add Transaction</button>
+        <div className={`transition duration-75 ease-in-out  ${formHidden ? `translate-y-96 md:translate-y-0`: `flex  -translate-y-96`} md:flex flex-col p-4 border-collapse rounded-lg bg-amber-100 mb-4 border-4 border-blue-600`}>
+          <div className="flex flex-row justify-between items-center py-4">
+            <h2 className="flex items-center text-lg font-semibold h-full">Add Transaction</h2>
+            <button className="flex md:hidden flex-row gap-2 py-2 px-4 rounded-full bg-gray-200" onClick={() => setFormHidden(true)}><span className="text-center align-middle">X</span>Close</button></div>
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <input
               type="date"
@@ -462,6 +494,7 @@ export default function TransactionsPage() {
               onChange={handleChange}
               className="border p-2 rounded w-full"
               required
+              ref={txnDateInputRef}
             />
             <div className="relative" ref={categoryInputRef}>
               <input
@@ -655,7 +688,7 @@ export default function TransactionsPage() {
               type="submit"
               className={` ${isSubmitting ? `bg-amber-700`: `bg-blue-600` } text-white px-4 py-2 rounded w-full`}
             >
-              { isSubmitting ? `Updating..Please Wait` : isEditing ? `Edit Transaction` : `Add Transaction` }
+              { isSubmitting ? `Updating..Please Wait` : isEditing ? `Update Transaction` : `Save Transaction` }
             </button>
           </form>
         </div>
