@@ -482,7 +482,7 @@ export default function TransactionsPage() {
       </div>
       <div className={`${!formHidden ? `row-span-12`: `row-span-2`} flex flex-col bg-white h-full p-2 w-full`}>
         <button className={`${!formHidden ? `hidden`: `flex`}  md:hidden py-2 px-4 bg-blue-600 text-white rounded-lg items-center justify-center`} onClick={() => setFormHidden(false)}>Add Transaction</button>
-        <div className={`transition duration-75 ease-in-out  ${formHidden ? `translate-y-96 md:translate-y-0`: `flex  -translate-y-96`} md:flex flex-col p-4 border-collapse rounded-lg bg-amber-100 mb-4 border-4 border-blue-600`}>
+        <div className={`z-40 transition duration-75 ease-in-out  ${formHidden ? `translate-y-96 md:translate-y-0`: `flex  -translate-y-96`} md:flex flex-col p-4 border-collapse rounded-lg bg-amber-100 mb-4 border-4 border-blue-600`}>
           <div className="flex flex-row justify-between items-center py-4">
             <h2 className="flex items-center text-lg font-semibold h-full">Add Transaction</h2>
             <button className="flex md:hidden flex-row gap-2 py-2 px-4 rounded-full bg-gray-200" onClick={() => setFormHidden(true)}><span className="text-center align-middle">X</span>Close</button></div>
