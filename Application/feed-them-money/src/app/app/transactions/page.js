@@ -38,6 +38,7 @@ export default function TransactionsPage() {
   const [filterStartDate, setFilterStartDate] = useState("");
   const [filterEndDate, setFilterEndDate] = useState("");
   const [filterCategory, setFilterCategory] = useState("");
+  const [filterAccount, setFilterAccount] = useState("");
   const [filterTag, setFilterTag] = useState("");
   const [sortAmount, setSortAmount] = useState(""); // "asc" or "desc"
 
@@ -250,6 +251,10 @@ export default function TransactionsPage() {
   if (filterCategory)
     filteredData = filteredData.filter(txn => txn.category === filterCategory);
 
+  // Filter by account
+  if (filterAccount)
+    filteredData = filteredData.filter(txn => txn.money_account === filterAccount);
+
   // Filter by tag
   if (filterTag)
     filteredData = filteredData.filter(txn =>
@@ -349,6 +354,21 @@ export default function TransactionsPage() {
                 <option value="">All Categories</option>
                 {categories.map(cat => {
                   const value = typeof cat === "string" ? cat : cat.category;
+                  return (
+                    <option key={value} value={value}>
+                      {value}
+                    </option>
+                  );
+                })}
+              </select>
+              <select
+                value={filterAccount}
+                onChange={e => setFilterAccount(e.target.value)}
+                className="border rounded px-2 py-1"
+              >
+                <option value="">All Accounts</option>
+                {moneyAccounts.map(acc => {
+                  const value = typeof acc === "string" ? acc : acc.account_name;
                   return (
                     <option key={value} value={value}>
                       {value}
