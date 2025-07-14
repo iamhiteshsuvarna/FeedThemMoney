@@ -15,6 +15,7 @@ export default function TransactionsPage() {
     money_account: "",
     tags: [],
   });
+  const txnDateInputRef = useRef(null);
 
   const [categories, setCategories] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -105,16 +106,22 @@ export default function TransactionsPage() {
       loadTransactions();
       loadTags();
       setIsSubmitting(false);
-      setForm({
+      setForm((prevForm) => ({
         txn_id: "",
-        // txn_date: "",
+        txn_date: prevForm.txn_date, // Keep the selected date intact
         category: "",
         particulars: "",
         amount: "",
         money_account: "",
         tags: [],
-      });
+      }));
       setIsEditing(false);
+      // Focus the txn_date input after submit
+      setTimeout(() => {
+        if (txnDateInputRef.current) {
+          txnDateInputRef.current.focus();
+        }
+      }, 0);
     }
     // Optionally show a message
   };
@@ -487,6 +494,7 @@ export default function TransactionsPage() {
               onChange={handleChange}
               className="border p-2 rounded w-full"
               required
+              ref={txnDateInputRef}
             />
             <div className="relative" ref={categoryInputRef}>
               <input
