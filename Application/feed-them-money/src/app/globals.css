@@ -26,50 +26,7 @@ body {
   height: 100%;
 }
 
-.dashboard-header {
-  background-color: #ff9f3f;
-  color: #000;
-  font-weight: bold;
-  border: 1px dashed #000; /* Add a visible border */
-}
-
-.dashboard-header  span {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  border: 0.5px dashed #000; /* Add a visible border */
-  padding: 0em 1em; /* Add some padding for better appearance */
-}
-
-.dashboard-header.month {
-  background-color: #ffbf7f;
-  min-width: 8em;
-}
-
-.dashboard-header.content {
-  background-color: #f7cfa7;
-  min-width: 10em;
-}
-
-.dashboard-data {
-  border: 1px dashed #000;
-}
-
-.dashboard-data > span {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  border: 1px dashed #000; /* Add a visible border */
-  padding: 0em 1em; /* Add some padding for better appearance */
-}
-
-.dashboard-data.amount {
-  text-align: right;
-}
+/* DASHBOARD COMMON */
 
 .sticky-col {
   position: sticky;
@@ -82,15 +39,171 @@ body {
   padding: 0em 1em; /* Add some padding for better appearance */
 }
 .left-0 {
-  left: 0;
+  left: -1px;
 }
 .left-1 {
-  left: 0em; /* Adjust this value to match the width of your first column */
+  left: 0px; /* Adjust this value to match the width of your first column */
   z-index: 10;
+
 }
 .z-10 {
   z-index: 10;
 }
+
+
+/* DASHBOARD HEADER */
+thead {
+  border-bottom: 4px solid #000; /* Add a bottom border for the header */
+}
+
+.dashboard-header {
+  background-color: #ff9f3f;
+  color: #000;
+  font-weight: bold;
+  border: 1px dashed #000; /* Add a visible border */
+}
+/* CATEGORY/CONCEPT */
+.dashboard-header > span {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  /*border: 0.5px dashed #000; /* Add a visible border */
+  padding: 0em 1em; /* Add some padding for better appearance */
+  box-shadow: 5px 0px 10px #000 !important;
+}
+
+/* MONTHS */
+.dashboard-header.month {
+  background-color: #ff9c38;
+  min-width: 8em;
+  border-right: 6px solid #000 !important; /* Add a right border for separation */
+}
+
+th.content.dashboard-header.spent {
+  background: #ffbf7f;
+  min-width: 10em;
+}
+
+th.content.dashboard-header.budget {
+  background:  #d4c19e;
+  min-width: 10em;
+  border-right: 6px solid #000; /* Add a right border for separation */
+}
+
+th.content.dashboard-header.balance {
+  background: #f5e9dc;
+  min-width: 10em;
+  
+}
+
+
+/* DASHBOARD DATA */
+
+.dashboard-data {
+  border: 1px dashed #000;
+}
+
+.dashboard-data span {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  /*border: 1px dashed #000; /* Add a visible border */
+  padding: 0em 1em; /* Add some padding for better appearance */
+  box-shadow: 5px 0px 5px #000 !important;
+}
+
+.dashboard-data.amount {
+  text-align: right;
+}
+
+td.dashboard-data.amount.spent {
+    background: #fff3e7;
+    color: #000;
+    cursor: pointer;
+}
+
+td.dashboard-data.amount.spent > sub.negetive {
+    color: red;
+}
+
+td.dashboard-data.amount.spent > sub.positive {
+    color: green;
+}
+
+
+
+td.dashboard-data.amount.budget {
+    border-right: 6px solid #000 !important; /* Add a right border for separation */
+}
+
+td.dashboard-data.amount.selected_for_sum {
+    background: #3d362f;
+    color: #fff;
+    cursor: pointer;
+}
+
+td.dashboard-data.amount.spent:hover {
+    background: #ffaa55;
+}
+
+td.dashboard-data.amount.budget {
+    background: #e8e8e8;
+}
+
+/* DASHBOARD FOOTER */
+
+tfoot {
+  border-top: 4px solid #000; /* Add a top border for the footer */
+}
+
+.dashboard-foot {
+    border: 1px dashed #000; /* Add a visible border */
+}
+
+.dashboard-foot span {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  /*border: 1px dashed #000; /* Add a visible border */
+  padding: 0em 1em; /* Add some padding for better appearance */
+  box-shadow: 5px 0px 5px #000 !important;
+}
+
+td.dashboard-foot.amount.spent {
+    background: #fff3e7;
+    color: #000;
+    cursor: pointer;
+}
+
+td.dashboard-foot.amount.spent > sub.negetive {
+    color: red;
+}
+
+td.dashboard-foot.amount.spent > sub.positive {
+    color: green;
+}
+
+
+td.dashboard-foot.amount {
+    text-align: right;
+}
+
+td.dashboard-foot.amount.budget {
+    border-right: 6px solid #000 !important; /* Add a right border for separation */
+}
+
+td.dashboard-foot.amount.budget.reserve {
+    border-top: 3px solid #000 !important; /* Add a right border for separation */
+}
+
+
+/* TRANSACTIONS TABLE */
 
 .transactions-table {
   min-width: 100%;
@@ -109,42 +222,6 @@ body {
   text-align: left; /* Align text to the left */
   border: 1px dashed #000; /* Add a bottom border for separation */
 }
-
-th.content.dashboard-header.spent {
-  background: #ff9c38;
-}
-
-th.content.dashboard-header.budget {
-  background: #f9c693;
-}
-
-th.content.dashboard-header.balance {
-  background: #f5e9dc;
-}
-
-td.dashboard-data.amount.spent {
-    background: #fff3e7;
-    color: #000;
-    cursor: pointer;
-}
-
-td.dashboard-data.amount.selected_for_sum {
-    background: #3d362f;
-    color: #fff;
-    cursor: pointer;
-}
-
-
-td.dashboard-data.amount.spent:hover {
-    background: #ffaa55;
-}
-
-
-
-td.dashboard-data.amount.budget {
-    background: #e8e8e8;
-}
-
 
 .transactions-table tbody td {
   padding: 0em 0.5rem; /* Equivalent to Tailwind's p-2 */
