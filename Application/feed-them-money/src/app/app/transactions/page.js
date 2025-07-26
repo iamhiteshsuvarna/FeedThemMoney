@@ -318,23 +318,25 @@ export default function TransactionsPage() {
   };
 
   return (
-    <div className="dark:text-black grid grid-cols-1 md:grid-cols-3 grid-rows-12 md:grid-rows-1 gap-2 items-start h-[calc(100vh-5em)]">
-      <div className={`col-span-2 row-span-10 flex items-start bg-white h-full p-2`}>
+    <div className="dark:text-black grid grid-cols-1 md:grid-cols-3 grid-rows-1 gap-2 items-start h-[calc(100vh-5em)]">
+      
       {data.length === 0 ? (
-          <div className="w-full h-full flex items-center justify-center">
+          <div className="w-full h-full flex items-center justify-center row-span-12">
             <p className="text-gray-500">Loading...</p>
-          </div>): 
-        <div className="w-full h-full flex flex-col gap-2">
+          </div>): <div className={`col-span-1 md:col-span-2 row-span-1 items-start bg-white h-full p-2 flex flex-col gap-2`}>
+          {/* FILTER */}
           <div className="flex flex-col gap-2 rounded-lg bg-blue-900 text-white p-2 w-full">
+            {/* TITLE, COUNT & SUM */}
             <div className="flex justify-between items-center">
               <span className="text-sm font-semibold">Filter Transactions</span>
               <div className="flex flex-row gap-2">
-                <span className="text-sm bg-blue-700 p-2 rounded-full text-white">Count {filteredData.length}</span>
+                <span className="text-sm bg-blue-700 p-2 rounded-full text-white">Count: {filteredData.length}</span>
                 <span className="text-sm bg-blue-700 p-2 rounded-full text-white">
-                  Sum {filteredData.reduce((sum, txn) => sum + Number(txn.amount), 0).toFixed(2)}
+                  Sum :{filteredData.reduce((sum, txn) => sum + Number(txn.amount), 0).toFixed(2)}
                 </span>
               </div>
             </div>
+            {/* FILTER FIELDS */}
             <div className="flex flex-wrap gap-2 items-center">
               <input
                 type="date"
@@ -417,7 +419,8 @@ export default function TransactionsPage() {
               </button>
             </div>
           </div>
-          <div className="overflow-y-auto h-full">
+          {/* TABLE */}
+          <div className="overflow-y-auto h-full w-full">
             <table className="transactions-table">
               <thead>
                 <tr>
@@ -477,15 +480,18 @@ export default function TransactionsPage() {
               </tbody>
             </table>
           </div>
-          
-        </div>}
-      </div>
-      <div className={`${!formHidden ? `row-span-12`: `row-span-2`} flex flex-col bg-white h-full p-2 w-full`}>
-        <button className={`${!formHidden ? `hidden`: `flex`}  md:hidden py-2 px-4 bg-blue-600 text-white rounded-lg items-center justify-center`} onClick={() => setFormHidden(false)}>Add Transaction</button>
-        <div className={`z-40 transition duration-75 ease-in-out  ${formHidden ? `translate-y-96 md:translate-y-0`: `flex  -translate-y-96`} md:flex flex-col p-4 border-collapse rounded-lg bg-amber-100 mb-4 border-4 border-blue-600`}>
+          <button className={`${formHidden ? `flex`: `hidden`} row-span-1 md:hidden py-2 px-4 bg-blue-600 text-white rounded-lg items-center justify-center w-full`} onClick={() => setFormHidden(false)}>Add Transaction</button>
+          </div>
+        }
+      
+      <div className={`z-40 transition duration-75 ease-in-out  ${formHidden && `hidden justify-end md:flex md:justify-center`} flex absolute md:relative col-span-1 row-span-1 flex-col h-[calc(100vh-5em)] p-2 w-full justify-end`}>
+        <div className={`flex flex-col p-4 border-collapse rounded-lg bg-amber-100 mb-4 border-4 border-blue-600 md:h-full`}>
+          {/* HEADER */}
           <div className="flex flex-row justify-between items-center py-4">
             <h2 className="flex items-center text-lg font-semibold h-full">Add Transaction</h2>
-            <button className="flex md:hidden flex-row gap-2 py-2 px-4 rounded-full bg-gray-200" onClick={() => setFormHidden(true)}><span className="text-center align-middle">X</span>Close</button></div>
+            <button className="flex md:hidden flex-row gap-2 py-2 px-4 rounded-full bg-gray-200" onClick={() => setFormHidden(true)}><span className="text-center align-middle">X</span>Close</button>
+          </div>
+          {/* FORM */}
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <input
               type="date"
@@ -692,6 +698,7 @@ export default function TransactionsPage() {
             </button>
           </form>
         </div>
+        <div className="bg-black md:bg-white opacity-35 md:opacity-100 w-full h-full absolute top-0 left-0 -z-10" />
       </div>
     </div>
   );

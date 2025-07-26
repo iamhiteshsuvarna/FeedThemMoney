@@ -34,11 +34,20 @@ function Navbar() {
 
 export default function Layout({ children }) {
   return (
-    <div className={`${geistSans.variable} ${geistMono.variable} antialiased text-black dark:text-black bg-gray-100 min-h-screen`}>
-      <AuthGuard>
-        <Navbar />
-        <main>{children}</main>
-      </AuthGuard>
-    </div>
+    <html className={`${geistSans.variable} ${geistMono.variable} antialiased text-black dark:text-black bg-gray-100 min-h-screen`}>
+      <head>
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#ffffff" />
+        <meta name="description" content="An app to feed money" />
+        <title>Feed Them Money</title>
+      </head>
+      <body>
+        <AuthGuard>
+          <Navbar />
+          <main>{children}</main>
+        </AuthGuard>
+      </body>      
+    </html>
   );
 }
