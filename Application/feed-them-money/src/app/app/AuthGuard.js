@@ -19,7 +19,7 @@ export default function AuthGuard({ children }) {
 
   if (!checked) {
     // Show nothing or a spinner while checking auth
-    return <div className="flex items-center justify-center h-screen text-gray-500">Checking authentication...</div>;
+    return <div className="absolute left-0 top-0 flex items-center justify-center w-screen h-screen text-gray-500">Checking authentication...</div>;
   }
 
   return children;

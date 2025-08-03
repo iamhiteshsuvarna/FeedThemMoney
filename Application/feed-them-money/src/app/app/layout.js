@@ -42,10 +42,14 @@ export default function Layout({ children }) {
         <meta name="description" content="An app to feed money" />
         <title>Feed Them Money</title>
       </head>
-      <body>
+      <body className="min-h-screen">
         <AuthGuard>
-          <Navbar />
-          <main>{children}</main>
+          <main className="flex flex-col min-h-screen w-full">
+            <Navbar />
+            <div className="flex-1 w-full">  
+              {children}
+            </div>
+          </main>
         </AuthGuard>
       </body>      
     </html>
