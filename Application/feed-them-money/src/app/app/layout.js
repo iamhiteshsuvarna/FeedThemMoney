@@ -22,10 +22,11 @@ export const metadata = {
 
 function Navbar() {
   return (
-    <nav className="bg-blue-950 h-18 text-white px-6 py-3 flex gap-6 items-center shadow">
+    <nav className="bg-blue-950 h-18 text-white px-6 py-3 flex gap-6 items-center shadow overflow-x-auto">
       <Link href="#" className="font-bold text-sm">Feed Them Money</Link>
       <Link href="/app" className=" hover:underline">Home</Link>
       <Link href="/app/transactions" className=" hover:underline">Transactions</Link>
+      <Link href="/app/wishlists" className=" hover:underline">Wishlist</Link>
       <Link href="/app/settings" className=" hover:underline">Settings</Link>
       <Link href="/app/logout" className="ml-auto hover:underline">Logout</Link>
     </nav>
@@ -34,7 +35,8 @@ function Navbar() {
 
 export default function Layout({ children }) {
   return (
-    <html className={`${geistSans.variable} ${geistMono.variable} antialiased text-black dark:text-black bg-gray-100 min-h-screen`}>
+    // ${geistSans.variable} ${geistMono.variable}
+    <html className={`antialiased text-black dark:text-black bg-gray-100 min-h-screen`}>
       <head>
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
