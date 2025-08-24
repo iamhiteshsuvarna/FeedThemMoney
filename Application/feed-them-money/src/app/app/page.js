@@ -8,13 +8,19 @@ export default function Home() {
     const [selectedCells, setSelectedCells] = useState([]);
     const [detailMode, setDetailMode] = useState(false);
     const [transactionDetails, setTransactionDetails] = useState([]);
+    const [moneyAccounts, setMoneyAccounts] = useState([]);
+    const [selectedMoneyAccount, setSelectedMoneyAccount] = useState(0);
 
-    useEffect(() => {
-      fetch("/api/dashboard")
-        .then((response) => response.json())
-        .then((data) => setData(data))
+    const fetchDashboard = () => {
+      fetch("/api/dashboard", {method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({money_account: selectedMoneyAccount})}).then((response) => response.json())
+        .then((data) => {
+          console.log("Dashboard Data:", data);
+          setData(data)
+        })
         .catch((error) => console.error("Error fetching transactions:", error));
-  
+    }
+
+    const fetchOpeningBalances = () => {
       fetch("/api/settings/load_opening_balance")
         .then((response) => response.json())
         .then((balances) => {
@@ -26,6 +32,23 @@ export default function Home() {
           setOpeningBalances(ob);
         })
         .catch((error) => console.error("Error fetching opening balances:", error));
+    };
+
+    const fetchMoneyAccounts = () => {
+      fetch("/api/transactions/load_money_accounts")
+          .then((response) => response.json()) 
+          .then((accounts) => {
+            setMoneyAccounts(accounts);
+          })
+          .catch((error) => console.error("Error fetching money accounts:", error));
+    }
+
+    useEffect(() => {fetchDashboard();}, [selectedMoneyAccount]); 
+
+    useEffect(() => {  
+      fetchDashboard();
+      fetchOpeningBalances();
+      fetchMoneyAccounts();
     }, []);
 
     const handleSpentCellClick = (cellKey, amount) => {
@@ -60,7 +83,7 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ month, category }),
+        body: JSON.stringify({ month, category, money_account: selectedMoneyAccount}),
       })  
       .then(response => response.json())
       .then(data => {
@@ -100,6 +123,21 @@ export default function Home() {
                   </div>
                   <span className="text-xs font-semibold">Detail Mode</span>
                 </label>
+                <div className="ml-6">
+                  <label className="text-xs font-semibold mr-2">Money Account:</label>
+                  <select
+                    value={selectedMoneyAccount}
+                    onChange={(e) => setSelectedMoneyAccount(Number(e.target.value))}
+                    className="border p-1 rounded"
+                  >
+                    <option value={0}>All Accounts</option>
+                    {moneyAccounts.map((account) => (
+                      <option key={account.id} value={account.id}>
+                        {account.account_name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
             </div>
             <div className="overflow-x-auto">
             {data.length === 0 ? (
